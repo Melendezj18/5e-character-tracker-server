@@ -6,7 +6,7 @@
   "name": "5e-character-tracker-server",
   "version": "1.0.0",
   "description": "character tracker for dnd 5e",
-  "main": "aerver.js",
+  "main": "server.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
