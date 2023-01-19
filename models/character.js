@@ -34,7 +34,7 @@ const characterSchema = new Schema(
             min: 1,
             max: 30
         },
-        intellegence: {
+        intelligence: {
             type: Number,
             required: true,
             min: 1,
