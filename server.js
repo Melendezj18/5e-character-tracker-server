@@ -27,6 +27,8 @@ app.use(requestLogger)
 
 app.use(characterRoutes)
 
+app.use('/seed', characterSeed)
+
 app.listen(PORT, () => {
     console.log('listening on ' + PORT)
 })

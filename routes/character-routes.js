@@ -1,5 +1,7 @@
 const express =require('express')
 
+const { handle404 } = require('../lib/custom-errors')
+
 const Character = require('../models/character')
 
 const router = express.Router()
@@ -14,9 +16,6 @@ router.get('/characters', (req, res, next) => {
         .then(characters => {
             res.status(200).json({ characters: characters })
         })
-        .catch(error => {
-            res.status(404).json({ message: "No characters found" });
-        })
         .catch(next)
 })
 
@@ -24,27 +23,24 @@ router.get('/characters', (req, res, next) => {
 // GET /characters/:id
 router.get('/characters/:id', (req, res, next) => {
     Character.findById(req.params.id)
+        .then(handle404)
         .then(character => {
             res.status(200).json({ character: character })
-        })
-        .catch(error => {
-            res.status(404).json({ message: "Character not found" });
         })
         .catch(next)
 })
 
 // CREATE
 // POST /characters
-router.post('/characters', (req, res) => {
+router.post('/characters', (req, res, next) => {
     // req.body
     // character: {}
     Character.create(req.body.character)
         .then(character => {
-            res.status(201).json({message: "Character created successfully", character: character })
+            // top lvl of this object is character
+            res.status(201).json({ character: character })
         })
-        .catch(error => {
-            res.status(400).json({ message: "Failed to create character" });
-        })
+        .catch(next)
 })
 
 // UPDATE
@@ -71,7 +67,5 @@ router.delete('/characters/:id', (req, res, next) => {
         .then(() => res.sendStatus(204))
         .catch(next)
 })
-
-
 
 module.exports = router
