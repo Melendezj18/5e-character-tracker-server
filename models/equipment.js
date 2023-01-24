@@ -19,8 +19,6 @@ const equipmentSchema = new Schema (
         owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Character',
-			default: null,
-			nullable: true
 		},
 
     },
