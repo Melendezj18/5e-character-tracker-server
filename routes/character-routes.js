@@ -4,11 +4,13 @@ const { handle404 } = require('../lib/custom-errors')
 
 const Character = require('../models/character')
 
+const { requireToken } = require('../config/auth')
+
 const router = express.Router()
 
 //INDEX
 // GET /characters
-router.get('/characters', (req, res, next) => {
+router.get('/characters', requireToken, (req, res, next) => {
     Character.find()
         .then(characters => {
             return characters.map(character => character)
@@ -21,7 +23,7 @@ router.get('/characters', (req, res, next) => {
 
 // SHOW
 // GET /characters/:id
-router.get('/characters/:id', (req, res, next) => {
+router.get('/characters/:id', requireToken, (req, res, next) => {
     Character.findById(req.params.id)
         .then(handle404)
         .then(character => {
@@ -32,7 +34,7 @@ router.get('/characters/:id', (req, res, next) => {
 
 // CREATE
 // POST /characters
-router.post('/characters', (req, res, next) => {
+router.post('/characters', requireToken, (req, res, next) => {
     // req.body
     // character: {}
     Character.create(req.body.character)
@@ -45,7 +47,7 @@ router.post('/characters', (req, res, next) => {
 
 // UPDATE
 // PATCH /character/:id
-router.patch('/characters/:id', (req, res, next) => {
+router.patch('/characters/:id', requireToken, (req, res, next) => {
     Character.findById(req.params.id)
         .then(handle404)
         .then(character => {
@@ -58,7 +60,7 @@ router.patch('/characters/:id', (req, res, next) => {
 
 // DELETE
 // DELETE /characters/:id
-router.delete('/characters/:id', (req, res, next) => {
+router.delete('/characters/:id', requireToken, (req, res, next) => {
     Character.findById(req.params.id)
         .then(handle404)
         .then(character => {

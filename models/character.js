@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const equipmentSchema = require('./equipment')
 
 const Schema = mongoose.Schema
 
@@ -51,7 +52,8 @@ const characterSchema = new Schema(
             required: true,
             min: 1,
             max: 30
-        }
+        },
+        equipment: [equipmentSchema]
 
 	},
 	{
